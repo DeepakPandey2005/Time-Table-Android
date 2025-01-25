@@ -1,0 +1,161 @@
+<!Doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO-DO App</title>
+
+    <style>*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+    body{
+    	display:flex;
+    	justify-content:center;
+    	}
+
+.app{
+        background-color: rgb(155, 216, 238);
+        display: flex;
+        padding: 10px;
+        margin-Top: 30px;
+        flex-direction: column;
+        width: 28%;
+        border-radius: 20px;
+        border: 8px double rgb(40, 30, 86);
+}
+.input{
+    display: flex;
+
+}
+
+.app input{
+    flex: 1;
+    height: 35px;
+    outline: none;
+    border-radius: 15px;
+    background-color: rgb(239, 233, 233);
+    padding: 5px;
+    font-size: larger;
+    margin: 5px;
+}
+.app button{
+    width: 45px;
+    height: 40px;
+    background-color: rgb(80, 232, 80);
+    color: black;
+    border-radius: 15px;
+    outline: none;
+    padding: 7px;
+    margin-top: 8px;
+    margin-right: 4px;
+    cursor: pointer;
+}
+button:hover{
+    background-color: rgb(213, 57, 57);
+    color: white;
+}
+ul li{
+    list-style: none;
+    padding: 10px;
+    margin: 5px;
+    font-size: larger;
+    border: 1px solid black;
+    border-radius: 15px;
+    font-family:sans-serif;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.checked{
+    text-decoration: line-through;
+
+}
+ul li  span{
+    position: absolute;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+    color:#555;
+    line-height: 40px;
+    margin-right: 15px;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+}
+
+ul li span:hover{
+    background-color: rgb(240, 105, 105);
+}
+
+
+@media only screen and (max-width:700px) {
+    .app{
+        width:88%;
+        border-radius: 15px;
+         margin-top: 13vh;
+        }
+
+.app button{
+Border-radius:5px;
+Height:40px;
+Width:45px;
+padding:5px;
+}}
+
+    </style>
+</head>
+<body>
+<div class="app">
+    <div class="input">
+        <input type="text" placeholder="Enter your task">
+        <button  onclick="addtask()">ADD</button>
+    </div>
+    <ul id="list-container"><br><br></ul>
+</div>
+
+<script >
+
+    let input=document.querySelector("input");
+    let lists=document.querySelector("#list-container");
+
+    function addtask(){
+        if (input.value===''){
+            alert("you must write first something");
+        }
+        else{
+            let li =document.createElement("li");
+            li.innerHTML=input.value;
+            lists.appendChild(li);
+            let span= document.createElement("span");
+            span.innerHTML="\u00d7";
+            li.appendChild(span);
+        }
+        input.value="";
+        savedata();
+    }
+
+    lists.addEventListener("click",function(e){
+        if(e.target.tagName ==="LI"){
+            e.target.classList.toggle("checked");
+            savedata();
+        }
+        else if(e.target.tagName==="SPAN"){
+            e.target.parentElement.remove();
+            savedata();
+        }
+    },false);
+
+    function savedata(){
+        localStorage.setItem("data",lists.innerHTML);
+    }
+    function showdata(){
+        lists.innerHTML= localStorage.getItem("data");
+    }
+    showdata();
+</script>
+</body>
+</html>
